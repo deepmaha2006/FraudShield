@@ -1,100 +1,159 @@
-FraudShield 
-FraudShield is a robust backend service designed as a digital guardian against online fraud, scams, and phishing attempts. It provides a comprehensive set of tools for user authentication, threat analysis of text and links, and secure user data management. The application is built with Node.js, Express.js, and uses a SQLite database for data persistence.
+🚨 FraudShield: Digital Threat Analysis Engine
+1. Overview
 
-Key Features
-User Authentication: Secure user registration and login system using JWT (JSON Web Tokens) and password hashing with bcryptjs.
+FraudShield is a robust, Node.js-based backend service engineered to function as a digital guardian against online fraud, scams, and phishing attempts.
 
-Profile Management: Endpoints for users to view and update their profile information, including profile picture uploads handled by multer.
+It provides a comprehensive suite of tools for user authentication, multi-vector threat analysis of text and hyperlinks, and secure data management. By leveraging a sophisticated analysis engine and a curated threat database, FraudShield calculates real-time risk scores for suspicious content, enabling proactive threat mitigation.
 
-Threat Analysis Engine: A sophisticated engine (analysisEngine.js) that calculates a "threat score" for text content and URLs.
+The system is designed for scalability and integration, offering a secure RESTful API for client applications to interface with its powerful detection capabilities.
 
-Multi-Vector Detection: Analyzes content against a comprehensive threat database of keywords, known spam messages, and malicious domains in multiple languages (English, Hinglish).
+2. Key Features
 
-Link Authenticity Analysis: Validates URLs against whitelists of official domains and blacklists of malicious domains, and checks for typosquatting.
+# Secure User Authentication
+Implements secure user registration and login using JWT for session management and bcryptjs for password hashing.
 
-Screenshot Analysis: Utilizes tesseract.js for OCR (Optical Character Recognition) to extract and analyze text from uploaded screenshots.
+# Profile Management
+RESTful endpoints for user profile management, including profile picture uploads with multer.
 
-Email Alert System: Integrated with nodemailer to send high-risk security alerts to users' registered email addresses.
+# Advanced Threat Analysis Engine
+Proprietary engine (analysisEngine.js) that calculates a quantitative "threat score" for text content and URLs based on multiple risk vectors.
 
-Database Schema: A well-defined SQLite database schema (schema.sql) for storing user data, analysis history, verification details, and support tickets.
+# Multi-Vector Detection
+Analyzes content against a comprehensive, multi-lingual (English, Hinglish) threat database of malicious keywords, spam messages, and fraud patterns.
 
-Environment Configuration: Securely manages sensitive information like database credentials and secret keys using a .env file.
+# Link Authenticity Verification
+Validates URLs against whitelists and blacklists, with typo-squatting detection.
 
-Project Structure
-Here is an overview of the key files and directories in the project:
+# OCR-Powered Screenshot Analysis
+Uses tesseract.js to extract text from user-uploaded screenshots for analysis.
 
-/
-|-- public/                 # Directory for static frontend files (HTML, CSS, JS)
-|   |-- index.html
-|   |-- dashboard.html
-|   |-- profile.html
-|   |-- analyzer.html
-|   `-- ... (other assets)
-|-- server.js               # The main entry point for the Express server
-|-- analysisEngine.js       # Core logic for calculating threat scores
-|-- mailer.js               # Handles sending email notifications
-|-- threat-database.js      # Database of malicious keywords and spam messages
-|-- weblinks.js             # Database of official and malicious domains
-|-- schema.sql              # SQL script to initialize the database schema
-|-- package.json            # Lists project dependencies and scripts
-|-- package-lock.json       # Records the exact versions of dependencies
-`-- .env                    # Environment variables (needs to be created)
+# Automated Email Alert System
+Integrated with nodemailer to send high-risk security alerts to registered users.
 
-Prerequisites
-Before you begin, ensure you have the following installed on your system:
+3. Project File Structure
+fraudshield-project/
+│
+├── node_modules/                       # Installed npm packages (auto-generated)
+│
+├── public/
+│   ├── css/
+│   │   └── style.css                   # Main stylesheet
+│   │
+│   ├── js/
+│   │   ├── analyzer-animations.js      # Animations for analyzer page
+│   │   ├── analyzer.js                 # Client-side logic (Analyzer)
+│   │   ├── animations.js               # General animations
+│   │   ├── dashboard-animations.js     # Dashboard animations
+│   │   ├── dashboard.js                # Client-side logic (Dashboard)
+│   │   ├── index-animations.js         # Login page animations
+│   │   ├── main.js                     # Core client-side script (Auth)
+│   │   ├── profile-animations.js       # Profile animations
+│   │   ├── profile.js                  # Profile management logic
+│   │   └── weekly-summary.js           # Summary page logic
+│   │
+│   ├── uploads/
+│   ├── analyzer.html                   # Threat analysis tool
+│   ├── dashboard.html                  # User dashboard
+│   ├── index.html                      # Landing/Login/Registration page
+│   ├── profile.html                    # Profile management page
+│   └── weekly-summary.html             # Weekly threat summaries
+│
+├── uploads/
+│
+├── .env                                # Environment variables
+├── analysisEngine.js                   # Threat score engine
+├── eng.traineddata                     # Tesseract OCR (English)
+├── hin.traineddata                     # Tesseract OCR (Hindi)
+├── fraudshield.db                      # SQLite database file
+├── mailer.js                           # Email service
+├── package.json                        # Project metadata & dependencies
+├── package-lock.json                   # Dependency lockfile
+├── schema.sql                          # Database schema
+├── server.js                           # Express server entry point
+├── threat-database.js                  # Malicious keywords database
+└── weblinks.js                         # Whitelist/Blacklist of domains
 
-Node.js (v14.x or later recommended)
+4. Installation Guide
+4.1 Install Prerequisites
 
-npm (Node Package Manager)
+Before starting, ensure you have the following installed:
 
-A command-line tool for SQLite, such as DB Browser for SQLite.
+| Software       | Purpose                           | Link                             |
+|----------------|-----------------------------------|----------------------------------|
+| Node.js (v14+) | JavaScript runtime for the server | [nodejs.org](https://nodejs.org) |
+| npm            | Package manager for Node.js       | Bundled with Node.js             |
+| SQLite 3       | CLI for database creation         | [sqlite.org](https://sqlite.org) |
 
-Installation & Setup
-Follow these steps to get your project up and running locally.
 
-1. Download the Project
-Download all the project files from your Google Drive into a local directory on your machine.
+4.2 Install Dependencies
 
-2. Install Dependencies
-Navigate to the project's root directory in your terminal and run the following command to install all the required npm packages:
+Run the following commands in the project root:
 
-npm install
+# 1. Express.js - Web server framework
+npm install express
 
-3. Configure Environment Variables
-Create a file named .env in the root of your project directory. Copy the content from your existing .env file or use the template below and fill in the values.
+# 2. SQLite3 - Database driver
+npm install sqlite3
+
+# 3. Bcrypt.js - Password hashing
+npm install bcryptjs
+
+# 4. JSON Web Token - Authentication tokens
+npm install jsonwebtoken
+
+# 5. Multer - File upload handler
+npm install multer
+
+# 6. Nodemailer - Email sending service
+npm install nodemailer
+
+# 7. Tesseract.js - OCR for screenshots
+npm install tesseract.js
+
+# 8. Dotenv - Environment variable loader
+npm install dotenv
+
+# 9. CORS - Cross-origin resource sharing
+npm install cors
+
+5. Environment Configuration
+
+Create a .env file in the project root with the following content:
 
 # --- Database Configuration ---
-# The name of the SQLite database file
 DB_FILE=fraudshield.db
 
-# --- Security & Authentication ---
-# A long, random, and secret string for signing JSON Web Tokens (JWT)
-# IMPORTANT: Change this to a new, long, random string for security
+# --- Security & Authentication Secret Key ---
 JWT_SECRET=your-super-secret-key-that-is-long-and-secure
 
-# --- Emailer Configuration (for sending alerts) ---
-# Your Gmail account and an "App Password"
-# See Google's documentation on how to generate an App Password: [https://support.google.com/accounts/answer/185833](https://support.google.com/accounts/answer/185833)
+# --- Emailer Configuration (Use a Gmail App Password) ---
 EMAIL_USER=your-email@gmail.com
 EMAIL_APP_PASSWORD=your-gmail-app-password
 
-4. Set Up the Database
-The schema.sql file contains the necessary commands to create all the tables. You need to run this script against your SQLite database file.
 
-Open your terminal in the project's root directory.
+📌 Note: For Gmail, you must use an App Password, not your regular email password.
+See Google Help: Create App Password
 
-Run the following command. This will execute the schema.sql script and create the fraudshield.db file (or whatever you named it in .env) with the correct tables.
+6. Database Setup
+
+# Initialize the SQLite database using the schema:
 
 sqlite3 fraudshield.db < schema.sql
 
-Running the Application
-Once the installation and setup are complete, you can start the server with the following command:
+
+If successful, a new file fraudshield.db will appear in the project root.
+
+7. Start the Server
+
+# Run the backend server:
 
 npm start
 
-The server will start, and you should see a confirmation message in your console:
+# You should see:
 
 Database connected successfully!
 Server is running on port 3000
 
-Your backend application is now running on http://localhost:3000.
+
+# The backend will now be live at:
+👉 http://localhost:3000
