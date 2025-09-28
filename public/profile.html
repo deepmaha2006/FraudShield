@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile – FraudShield</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #010411;
+            font-family: 'Inter', sans-serif;
+        }
+        #profile-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+        }
+        main {
+            position: relative;
+            z-index: 1;
+        }
+        /* Custom styles for toggle switch from your image */
+        .toggle-checkbox:checked + .toggle-label .dot {
+            transform: translateX(1.5rem);
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0ea5e9; /* This is a cyan/sky color */
+        }
+        .glass-effect {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cta-button {
+            background: linear-gradient(90deg, #00BFFF, #1E90FF);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+        }
+        .cta-button:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 191, 255, 0.8);
+        }
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #374151; /* gray-700 */
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden text-gray-200">
+
+    <canvas id="profile-bg"></canvas>
+
+    <header id="header" class="glass-effect fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/index.html" class="text-2xl font-bold text-white">FraudShield</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="/dashboard.html" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition font-medium">Dashboard</a>
+                <a href="/profile.html" class="text-cyan-400 font-semibold">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <section id="profile-section" class="py-12">
+            <div class="container mx-auto px-6 max-w-7xl">
+                
+                <div class="mb-8 flex justify-end">
+                    <a href="/dashboard.html" class="inline-flex items-center gap-2 text-cyan-300 hover:text-white font-medium px-4 py-2 rounded-lg bg-gray-800/50 border border-gray-700 hover:bg-gray-700/70 hover:border-cyan-500 transition-all duration-300 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:-translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Back to Dashboard</span>
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-10">Account Settings</h1>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <div class="lg:col-span-1">
+                        <div class="glass-effect p-4 rounded-2xl sticky top-28">
+                            <ul class="space-y-2">
+                                <li><a href="#profile" data-tab="profile" class="tab-button active flex items-center gap-3 p-3 rounded-lg font-semibold text-gray-300 hover:bg-gray-800 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Profile Details</a></li>
+                                <li><a href="#notifications" data-tab="notifications" class="tab-button flex items-center gap-3 p-3 rounded-lg font-semibold text-gray-300 hover:bg-gray-800 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg> Notification Preferences</a></li>
+                                <li><a href="#security" data-tab="security" class="tab-button flex items-center gap-3 p-3 rounded-lg font-semibold text-gray-300 hover:bg-gray-800 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Security</a></li>
+                                <li><a href="#verification" data-tab="verification" class="tab-button flex items-center gap-3 p-3 rounded-lg font-semibold text-gray-300 hover:bg-gray-800 transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg> Verification</a></li>
+                                
+                                <li>
+                                    <hr class="border-gray-700 my-2">
+                                    <a href="#report" data-tab="report" class="tab-button flex items-center gap-3 p-3 rounded-lg font-semibold text-red-300 hover:bg-red-500/20 hover:text-red-200 transition">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>Report an Incident</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="border-gray-700 my-2">
+                                    <button id="logoutBtn" class="w-full flex items-center gap-3 p-3 rounded-lg font-semibold text-gray-400 hover:bg-gray-800 hover:text-white transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg> Log Out</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3">
+                        <div id="profile-content" class="tab-content space-y-8">
+                            <div class="glass-effect p-8 rounded-2xl">
+                                <h2 class="text-2xl font-bold text-white mb-6">Profile Details</h2>
+                                <div class="flex flex-col md:flex-row items-center gap-8">
+                                    <div class="relative w-32 h-32 flex-shrink-0">
+                                        <button id="avatar-button" class="w-full h-full rounded-full focus:outline-none focus:ring-4 focus:ring-cyan-500/50">
+                                            <img id="avatarImg" src="https://via.placeholder.com/128" alt="User Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-gray-700">
+                                        </button>
+                                        <input type="file" id="avatarInput" class="hidden" accept="image/png, image/jpeg, image/gif">
+                                    </div>
+                                    <div class="w-full text-center md:text-left">
+                                        <h3 id="profileName" class="text-3xl font-bold text-white">User Name</h3>
+                                        <p id="profileEmail" class="text-gray-400 mt-1">user@example.com</p>
+                                        <p id="profileJoined" class="text-sm text-gray-500 mt-2">Joined on: Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="glass-effect p-8 rounded-2xl">
+                                <h2 class="text-2xl font-bold text-white mb-6">Update Information</h2>
+                                <form id="updateProfileForm" class="space-y-4">
+                                    <div>
+                                        <label for="fullName" class="block text-gray-400 mb-2 font-medium">Full Name</label>
+                                        <input type="text" id="fullName" name="fullName" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-gray-400 mb-2 font-medium">Phone Number</label>
+                                        <input type="tel" id="phone" name="phone" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    </div>
+                                    <div class="pt-2">
+                                        <button type="submit" class="cta-button text-white font-bold py-3 px-6 rounded-lg">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="notifications-content" class="tab-content space-y-8 hidden">
+                            <div class="glass-effect p-8 rounded-2xl">
+                                <h2 class="text-2xl font-bold text-white mb-6">Notification Preferences</h2>
+                                <div class="space-y-8">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-100">Email Alerts for High-Risk Threats</h4>
+                                            <p class="text-sm text-gray-400">Receive immediate email notifications for critical security alerts.</p>
+                                        </div>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="emailHighRiskToggle" class="sr-only toggle-checkbox">
+                                            <div class="toggle-label relative block bg-gray-600 w-14 h-8 rounded-full">
+                                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-100">Weekly Security Summary</h4>
+                                            <p class="text-sm text-gray-400">Get a summary of your security status and relevant news once a week.</p>
+                                        </div>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="emailWeeklySummaryToggle" class="sr-only toggle-checkbox">
+                                            <div class="toggle-label relative block bg-gray-600 w-14 h-8 rounded-full">
+                                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                     <div class="flex items-center justify-between opacity-60">
+                                        <div>
+                                            <h4 class="font-medium text-gray-300">Push Notifications (Mobile App) <span class="text-xs bg-yellow-600 text-white py-0.5 px-2 rounded-full ml-2">Coming Soon</span></h4>
+                                            <p class="text-sm text-gray-500">Get real-time alerts directly on your mobile device.</p>
+                                        </div>
+                                        <label class="flex items-center cursor-not-allowed">
+                                            <div class="relative block bg-gray-700 w-14 h-8 rounded-full">
+                                                <div class="absolute left-1 top-1 bg-gray-500 w-6 h-6 rounded-full"></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="text-right pt-6 mt-6 border-t border-gray-700">
+                                    <button id="savePreferencesBtn" class="cta-button text-white font-bold py-3 px-6 rounded-lg">Save Preferences</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="security-content" class="tab-content space-y-8 hidden">
+                           <div class="glass-effect p-8 rounded-2xl">
+                                <h2 class="text-2xl font-bold text-white mb-6">Change Password</h2>
+                                <form id="changePasswordForm" class="space-y-4">
+                                    <div>
+                                        <label for="currentPassword" class="block text-gray-400 mb-2 font-medium">Current Password</label>
+                                        <input type="password" id="currentPassword" name="currentPassword" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="newPassword" class="block text-gray-400 mb-2 font-medium">New Password</label>
+                                        <input type="password" id="newPassword" name="newPassword" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                                    </div>
+                                    <div class="pt-2">
+                                        <button type="submit" class="cta-button text-white font-bold py-3 px-6 rounded-lg">Update Password</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="verification-content" class="tab-content space-y-8 hidden">
+                            <div class="glass-effect p-8 rounded-2xl">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-2xl font-bold text-white">Identity Verification</h2>
+                                    <span id="verificationStatusBadge" class="px-3 py-1 rounded-full text-sm font-semibold"></span>
+                                </div>
+                                <p class="text-gray-400 mb-6">Verify your identity to help us build a more secure community. Verified user reports are prioritized.</p>
+                                <div id="verification-form-container">
+                                    <form id="verificationForm">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <input name="fullNameOnDoc" type="text" placeholder="Full Name (as on document)" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                            <input name="dob" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Date of Birth" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                        </div>
+                                        <select name="docType" id="docTypeSelect" class="w-full bg-gray-800 text-white p-3 rounded-lg mt-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                                            <option value="">Select Document Type</option>
+                                            <option value="Aadhaar">Aadhaar Card</option>
+                                            <option value="PAN">PAN Card</option>
+                                            <option value="DL">Driving License</option>
+                                        </select>
+                                        <div id="docInputContainer" class="mt-4"></div>
+                                        <button type="submit" class="w-full cta-button text-white font-bold py-3 px-6 rounded-lg mt-6">Submit for Verification</button>
+                                    </form>
+                                </div>
+                                <div id="verification-status-container" class="hidden text-center">
+                                    <p class="text-lg font-semibold text-white">Your verification is <span id="verificationStatusText"></span>.</p>
+                                    <p class="text-gray-400 mt-2">You will be notified once the review is complete.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="report-content" class="tab-content space-y-8 hidden">
+                            <div class="glass-effect p-8 rounded-2xl">
+                                <h2 class="text-2xl font-bold text-white mb-4 text-red-400">Report a Cyber Crime Incident</h2>
+                                <p class="text-gray-300 mb-6">
+                                    If you have been a victim of a financial cyber fraud or any other type of cyber crime, it is crucial to report it to the authorities immediately. FraudShield is an analysis tool to help you identify threats, not a law enforcement agency.
+                                </p>
+                                <p class="text-gray-300 mb-8">
+                                    Please use the official Government of India portal to file a formal complaint. Reporting the incident can help in tracing the culprits and preventing them from harming others in the future.
+                                </p>
+                                <div class="text-center">
+                                    <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" class="inline-block cta-button !bg-red-600 hover:!bg-red-700 focus:!ring-red-500 text-white font-bold py-3 px-8 rounded-lg text-lg">
+                                        Go to National Cyber Crime Reporting Portal
+                                    </a>
+                                </div>
+                                 <p class="text-center text-gray-500 text-sm mt-4">You will be redirected to an external government website.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="avatarModal" class="modal fixed inset-0 z-[100] flex items-center justify-center invisible opacity-0 bg-black bg-opacity-70 transition-opacity duration-300">
+        <div class="glass-effect w-full max-w-sm p-6 rounded-2xl m-4 text-center">
+            <h2 class="text-xl font-bold text-white mb-6">Profile Photo Options</h2>
+            <div class="space-y-3">
+                <label for="avatarInput" class="block w-full cursor-pointer bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-500 transition font-semibold">
+                    Upload New Picture
+                </label>
+                <button id="removeAvatarBtn" class="w-full bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-500 transition font-semibold">
+                    Remove Current Picture
+                </button>
+                <button id="closeAvatarModal" class="w-full bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition font-medium mt-4">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="logoutModal" class="modal fixed inset-0 z-[100] flex items-center justify-center invisible opacity-0 bg-black bg-opacity-70 transition-opacity duration-300">
+        <div class="glass-effect w-full max-w-md p-8 rounded-2xl m-4 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Confirm Log Out</h2>
+            <p class="text-gray-400 mb-8">Are you sure you want to log out of your FraudShield account?</p>
+            <div class="flex justify-center gap-4">
+                <button id="cancelLogout" class="bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition font-medium">Cancel</button>
+                <button id="confirmLogout" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-500 transition font-medium">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationModal" class="modal fixed inset-0 z-[101] flex items-center justify-center invisible opacity-0 bg-black bg-opacity-70 transition-opacity duration-300">
+        <div class="glass-effect w-full max-w-md p-8 rounded-2xl m-4 text-center">
+            <div id="notificationIcon" class="mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center text-3xl">
+            </div>
+            <h2 id="notificationTitle" class="text-2xl font-bold text-white mb-2"></h2>
+            <p id="notificationMessage" class="text-gray-300 mb-8"></p>
+            <button id="closeNotificationModal" class="bg-cyan-600 text-white px-8 py-2 rounded-lg hover:bg-cyan-500 transition font-medium">OK</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/profile-animations.js" defer></script>
+    <script src="js/profile.js" defer></script>
+</body>
+</html>

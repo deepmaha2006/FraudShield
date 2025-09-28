@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudShield – Your AI-Powered Digital Guardian</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        body {
+            background-color: #010411; /* Dark background for the scene */
+            color: #E2E8F0;
+        }
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: -1; /* Place canvas behind all content */
+        }
+        /* Ensure sections have a transparent background to see the canvas */
+        main section {
+            background-color: transparent;
+        }
+        /* Add spacing for scroll animations */
+        .content-spacer {
+            margin-bottom: 25vh;
+        }
+    </style>
+    </head>
+<body class="overflow-x-hidden">
+
+    <canvas id="bg"></canvas>
+
+    <header id="header" class="glass-effect fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <a href="/index.html" class="flex items-center gap-2" aria-label="FraudShield Home">
+                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <title>FraudShield Logo</title>
+                    <path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="currentColor" fill-opacity="0.2"/>
+                    <path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" stroke="cyan" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12.5L11 14.5L15 10.5" stroke="cyan" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="text-2xl font-bold text-white">FraudShield</span>
+            </a>
+
+            <nav class="hidden lg:flex space-x-6 items-center text-sm font-medium">
+                <a href="#scam-threats" class="text-gray-300 hover:text-cyan-400 transition">Threats</a>
+                <a href="#features" class="text-gray-300 hover:text-cyan-400 transition">Protection</a>
+                <a href="#technology" class="text-gray-300 hover:text-cyan-400 transition">Technology</a>
+                <a href="#advanced-tech" class="text-gray-300 hover:text-cyan-400 transition">How It Works</a>
+                <a href="#why-fraudshield" class="text-gray-300 hover:text-cyan-400 transition">Why Us</a>
+                <a href="#support" class="text-gray-300 hover:text-cyan-400 transition">Support</a>
+            </nav>
+            <div id="auth-buttons" class="flex items-center space-x-4">
+                <button id="loginBtn" class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-500 transition font-medium">Log In</button>
+                <button id="signupBtn" class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-500 transition font-medium">Sign Up</button>
+            </div>
+            <div id="user-profile" class="hidden">
+                <a href="/profile.html" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition font-medium">Profile</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 w-full flex flex-col items-center">
+        <section id="home" class="h-screen w-full flex flex-col justify-center items-center text-center px-4 content-spacer">
+            <div class="relative z-10">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
+                    India's Ultimate Shield Against Digital Fraud
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    One app for SMS and emails. Tailored for Indian fraud patterns with multiple languages support and crowdsourced protection.
+                </p>
+                
+                <button id="getProtectedBtn" class="cta-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                    Get Protected Now
+                </button>
+                <a href="dashboard.html" id="dashboardBtn" class="cta-button text-white font-bold py-3 px-8 rounded-full text-lg hidden">
+                    Go to Your Dashboard
+                </a>
+                <p class="text-sm text-gray-400 mt-4">Join over 500,000 users in our trusted defense network.</p>
+            </div>
+        </section>
+
+        <section id="scam-threats" class="py-20 fade-in-section content-spacer">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">The Growing Threat of Scams</h2>
+                <p class="text-gray-400 max-w-3xl mx-auto mb-12">Every day, thousands fall victim to sophisticated scams disguised as legitimate messages.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                    <div class="glass-effect p-8 rounded-2xl flex flex-col">
+                        <div class="w-16 h-16 rounded-lg bg-red-500/10 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Fake KYC Updates</h3>
+                        <p class="text-cyan-300 italic mb-4">"Your bank KYC is expiring! Click here to update or your account will be blocked!"</p>
+                        <p class="text-gray-400 mt-auto">Scammers create fake messages to steal your banking details.</p>
+                    </div>
+                    <div class="glass-effect p-8 rounded-2xl flex flex-col">
+                        <div class="w-16 h-16 rounded-lg bg-blue-500/10 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 6v-1h4a2 2 0 012 2v10a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h4z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">UPI Payment Frauds</h3>
+                        <p class="text-cyan-300 italic mb-4">"You've received ₹10,000! Click this link to claim your money now!"</p>
+                        <p class="text-gray-400 mt-auto">Fraudsters trick users into revealing sensitive payment information.</p>
+                    </div>
+                    <div class="glass-effect p-8 rounded-2xl flex flex-col">
+                        <div class="w-16 h-16 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-6">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Job Offer Scams</h3>
+                        <p class="text-cyan-300 italic mb-4">"Work from home! Earn ₹50,000/month! Just pay ₹2,000 registration fee first!"</p>
+                        <p class="text-gray-400 mt-auto">Fake job offers lure users into paying upfront fees for non-existent jobs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 fade-in-section content-spacer">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">Comprehensive Protection</h2>
+                <p class="text-gray-400 mb-12">Everything you need to stay safe from modern scams.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="feature-card-container">
+                        <div class="feature-card p-8 rounded-2xl">
+                            <div class="text-5xl mb-4 text-cyan-400">📱</div>
+                            <h3 class="text-xl font-bold text-white mb-2">Real-time Alerts</h3>
+                            <p class="text-gray-400">Instantly get flagged for scam SMS messages using our vast, crowdsourced database and keyword analysis.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card-container">
+                        <div class="feature-card p-8 rounded-2xl">
+                            <div class="text-5xl mb-4 text-cyan-400">📧</div>
+                            <h3 class="text-xl font-bold text-white mb-2">Email Phishing Guard</h3>
+                            <p class="text-gray-400">Our smart engine scans emails for suspicious links and fraud patterns, keeping your inbox safe.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card-container">
+                        <div class="feature-card p-8 rounded-2xl">
+                            <div class="text-5xl mb-4 text-cyan-400">🌍</div>
+                            <h3 class="text-xl font-bold text-white mb-2">Crowdsourced Power</h3>
+                            <p class="text-gray-400">Report a scam with one tap. Your report instantly helps protect the entire FraudShield community.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card-container">
+                        <div class="feature-card p-8 rounded-2xl">
+                            <div class="text-5xl mb-4 text-cyan-400">🇮🇳</div>
+                            <h3 class="text-xl font-bold text-white mb-2">Built for India</h3>
+                            <p class="text-gray-400">Specialized protection against KYC, UPI, and job frauds with full support for Hinglish and regional languages.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="technology" class="py-20 fade-in-section content-spacer">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Simple, Powerful, Effective Technology</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mb-16">Our three-step process ensures comprehensive protection with clarity and ease.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+                    
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex-shrink-0 w-20 h-20 mb-6 rounded-2xl glass-effect flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Detect</h3>
+                        <p class="text-gray-400">Our Hybrid AI engine analyzes incoming SMS and emails against our fraud database and keyword engine.</p>
+                    </div>
+        
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex-shrink-0 w-20 h-20 mb-6 rounded-2xl glass-effect flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Alert</h3>
+                        <p class="text-gray-400">If a threat is detected, you receive a clear "Fraud Alert" before you can be harmed, with details on the scam type.</p>
+                    </div>
+        
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex-shrink-0 w-20 h-20 mb-6 rounded-2xl glass-effect flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944a11.955 11.955 0 019-4.944c3.996 0 7.58-1.449 10.147-3.867A11.955 11.955 0 0121 12.056a11.955 11.955 0 00-8.382-8.072z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Protect</h3>
+                        <p class="text-gray-400">Scams are blocked, and by reporting new ones, you strengthen the shield for everyone in the community.</p>
+                    </div>
+        
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced-tech" class="py-20 fade-in-section content-spacer">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">How Our Technology Protects You</h2>
+                    <p class="text-gray-400 max-w-3xl mx-auto mt-4">We go beyond simple blocklists with a sophisticated, multi-layered defense system.</p>
+                </div>
+                <div class="space-y-24">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="glass-effect p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-white mb-4">Multi-Vector Analysis Engine</h3>
+                            <p class="text-gray-300 text-lg mb-6">Our system doesn't just look at one thing. It analyzes multiple vectors—sender reputation, message content, linguistic patterns (including Hinglish), URL structure, and technical indicators—to build a comprehensive risk score. This holistic approach allows us to detect novel threats that might evade simpler systems.</p>
+                            <ul class="space-y-3 text-gray-400">
+                                <li class="flex items-center gap-3"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Semantic and keyword analysis.</li>
+                                <li class="flex items-center gap-3"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Deep link and domain inspection.</li>
+                                <li class="flex items-center gap-3"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Image and screenshot OCR analysis.</li>
+                            </ul>
+                        </div>
+                        <div class="flex justify-center items-center">
+                             <svg class="w-full max-w-md h-auto text-cyan-500" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="128" cy="128" r="120" stroke="currentColor" stroke-width="4" stroke-opacity="0.1"/>
+                                <path d="M128 48L193.92 84.5V157.5L128 194L62.08 157.5V84.5L128 48Z" stroke="currentColor" stroke-width="2" stroke-opacity="0.3"/>
+                                <circle cx="128" cy="128" r="16" fill="currentColor" fill-opacity="0.8"/>
+                                <g opacity="0.6">
+                                    <circle cx="128" cy="68" r="8" fill="currentColor"/>
+                                    <circle cx="180" cy="98" r="8" fill="currentColor"/>
+                                    <circle cx="180" cy="158" r="8" fill="currentColor"/>
+                                    <circle cx="128" cy="188" r="8" fill="currentColor"/>
+                                    <circle cx="76" cy="158" r="8" fill="currentColor"/>
+                                    <circle cx="76" cy="98" r="8" fill="currentColor"/>
+                                </g>
+                                <g opacity="0.5" stroke-linecap="round">
+                                    <line x1="128" y1="128" x2="128" y2="68" stroke="currentColor" stroke-width="1.5"/>
+                                    <line x1="128" y1="128" x2="180" y2="98" stroke="currentColor" stroke-width="1.5"/>
+                                    <line x1="128" y1="128" x2="180" y2="158" stroke="currentColor" stroke-width="1.5"/>
+                                    <line x1="128" y1="128" x2="128" y2="188" stroke="currentColor" stroke-width="1.5"/>
+                                    <line x1="128" y1="128" x2="76" y2="158" stroke="currentColor" stroke-width="1.5"/>
+                                    <line x1="128" y1="128" x2="76" y2="98" stroke="currentColor" stroke-width="1.5"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="flex justify-center items-center">
+                           <svg class="w-full max-w-md h-auto text-cyan-500" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M128 238C189.924 238 240 187.924 240 126C240 64.0761 189.924 14 128 14C66.0761 14 16 64.0761 16 126C16 187.924 66.0761 238 128 238Z" stroke="currentColor" stroke-width="4" stroke-opacity="0.1"/>
+                                <path d="M128 14C112.5 40.5 112.5 83 128 126C143.5 169 143.5 211.5 128 238" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+                                <path d="M238 126C211.5 110.5 169 110.5 126 126C83 141.5 40.5 141.5 14 126" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+                                <circle cx="128" cy="126" r="8" fill="currentColor"/>
+                                <g opacity="0.7">
+                                    <circle cx="80" cy="80" r="6" fill="currentColor"/><circle cx="180" cy="170" r="6" fill="currentColor"/><circle cx="90" cy="180" r="6" fill="currentColor"/><circle cx="170" cy="70" r="6" fill="currentColor"/><circle cx="200" cy="110" r="6" fill="currentColor"/><circle cx="50" cy="140" r="6" fill="currentColor"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="glass-effect p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-white mb-4">Real-Time Threat Intelligence</h3>
+                            <p class="text-gray-300 text-lg mb-6">Our shield is constantly learning. When a user anywhere in India reports a new scam, our system instantly analyzes it and updates our global threat database. This intelligence is then pushed to all FraudShield users, meaning a threat identified for one person immediately protects the entire community.</p>
+                             <ul class="space-y-3 text-gray-400">
+                                <li class="flex items-center gap-3"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Instantly updated global database of threats.</li>
+                                <li class="flex items-center gap-3"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Prioritized reports from verified users.</li>
+                                <li class="flex items-center gap-3"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Protection against zero-day and emerging scams.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-fraudshield" class="py-20 fade-in-section content-spacer">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">The Anatomy of Our Shield</h2>
+                    <p class="text-gray-400 mt-4 max-w-3xl mx-auto">Why FraudShield is an essential tool for navigating the complexities of modern digital life in India.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-stretch">
+                    <div class="glass-effect p-8 rounded-2xl border border-red-500/30">
+                        <div class="flex items-center gap-4 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h3 class="text-2xl font-bold text-red-400">The Problem: A Sophisticated Threat</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            India's rapid digitization has brought convenience but also opened a new frontier for sophisticated fraud. Scammers use psychological manipulation and advanced technology to appear legitimate, exploiting emotions like urgency, greed, and fear.
+                        </p>
+                        <p class="text-gray-300">
+                            The result is not just financial loss, but also significant emotional toll. A simple, reactive approach is no longer enough to counter these evolving digital threats.
+                        </p>
+                    </div>
+                    <div class="glass-effect p-8 rounded-2xl border border-cyan-500/30 lg:scale-105">
+                         <div class="flex items-center gap-4 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h3 class="text-2xl font-bold text-cyan-400">Our Solution: A Proactive Defense</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6">
+                            FraudShield was built to counter this modern threat. Our defense is proactive, intelligent, and collective, built on two core pillars:
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-4">
+                                <svg class="w-6 h-6 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                <div>
+                                    <h4 class="font-bold text-white">Hybrid AI Core</h4>
+                                    <p class="text-gray-400">Our system combines machine learning to identify new scam patterns and a powerful keyword engine to catch known threats instantly.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                               <svg class="w-6 h-6 text-cyan-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.002 3.002 0 013.39-2.43 3.002 3.002 0 013.39 2.43m-6.78 0a3.002 3.002 0 00-3.39-2.43 3.002 3.002 0 00-3.39 2.43m6.78 0a3.002 3.002 0 01-3.39-2.43m3.39 2.43a3 3 0 01-3.39 2.43m-3.39-2.43a3 3 0 013.39-2.43m-3.39 2.43c.112-.56.303-1.094.57-1.587m1.21-2.427a3 3 0 014.45 0m-4.45 0a3 3 0 00-4.45 0M12 3a3 3 0 013 3v1h-6V6a3 3 0 013-3z"></path></svg>
+                                <div>
+                                    <h4 class="font-bold text-white">The Power of Community</h4>
+                                    <p class="text-gray-400">Every user report strengthens our network, making you an active participant in a nationwide digital defense system.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="verification-promo" class="py-20 bg-gray-900/50 fade-in-section content-spacer">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Become a Trusted Community Member</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mb-8">Verify your identity to help us build a secure, trusted network. Verified users' reports are prioritized, making our community shield even stronger. We use government-issued IDs for a secure verification process.</p>
+                <button id="verifyBtn" class="cta-button text-white font-bold py-3 px-8 rounded-full text-lg">Verify Your Identity</button>
+            </div>
+        </section>
+
+        <section id="support" class="py-20 fade-in-section">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Help & Support</h2>
+                    <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Your questions, answered. Find what you need in our FAQ or contact our dedicated support team directly.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-white mb-4">Frequently Asked Questions</h3>
+                        
+                        <details class="glass-effect rounded-lg p-6 cursor-pointer group">
+                            <summary class="flex justify-between items-center font-semibold text-lg text-white list-none">
+                                What is FraudShield?
+                                <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p class="text-gray-400 mt-4">FraudShield is a mobile security app designed specifically for India. It protects you from scam SMS and phishing emails by using a combination of keyword detection, link analysis, and a powerful crowdsourced database of known fraud schemes.</p>
+                        </details>
+
+                        <details class="glass-effect rounded-lg p-6 cursor-pointer group">
+                            <summary class="flex justify-between items-center font-semibold text-lg text-white list-none">
+                                How does reporting a scam help?
+                                <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p class="text-gray-400 mt-4">When you report a scam, the fraudulent number or email address is added to our central database. This information is then used to warn and protect all other FraudShield users in real-time. Your one-tap action creates a stronger shield for millions.</p>
+                        </details>
+
+                        <details class="glass-effect rounded-lg p-6 cursor-pointer group">
+                            <summary class="flex justify-between items-center font-semibold text-lg text-white list-none">
+                                Is my personal data safe?
+                                <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p class="text-gray-400 mt-4">Absolutely. We prioritize your privacy. The app only scans for scam-related patterns and does not read your personal messages or emails. Identity verification data is encrypted and used solely for the purpose of creating a trusted user community to fight fraud.</p>
+                        </details>
+
+                        <details class="glass-effect rounded-lg p-6 cursor-pointer group">
+                            <summary class="flex justify-between items-center font-semibold text-lg text-white list-none">
+                                Why do you need identity verification?
+                                <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p class="text-gray-400 mt-4">Identity verification helps prevent misuse of the reporting system. By ensuring our users are real people, we can trust the scam reports and act on them faster. This creates a highly reliable and effective community-driven defense system.</p>
+                        </details>
+                    </div>
+
+                    <div>
+                        <div class="glass-effect rounded-lg p-8 h-full">
+                            <h3 class="text-2xl font-bold text-white mb-4">Contact Support</h3>
+                            <p class="text-gray-400 mb-6">Have a specific question? Our team is here to help. Fill out the form below and we'll get back to you within 24 hours.</p>
+                            <form id="supportForm" class="space-y-4">
+                                <input type="text" name="name" placeholder="Full Name" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                <input type="email" name="email" placeholder="Email Address" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                <input type="tel" name="phone" placeholder="Phone Number (Optional)" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                <textarea name="problem" placeholder="Describe your issue in detail..." rows="5" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"></textarea>
+                                <button type="submit" class="w-full cta-button text-white font-bold py-3 px-6 rounded-lg">Submit Ticket</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black py-8 relative z-10">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2025 FraudShield. All Rights Reserved.</p>
+            <p>Made in India, for India </p>
+        </div>
+    </footer>
+    
+    <div id="loginModal" class="modal fixed inset-0 z-50 flex items-center justify-center invisible opacity-0 bg-black bg-opacity-70">
+        <div class="glass-effect w-full max-w-md p-8 rounded-2xl m-4 relative">
+            <button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close modal">&times;</button>
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Welcome Back</h2>
+            <form id="loginForm">
+                <input name="email" type="email" placeholder="Email Address" required class="w-full bg-gray-800 text-white p-3 rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <input name="password" type="password" placeholder="Password" required class="w-full bg-gray-800 text-white p-3 rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <button type="submit" class="w-full cta-button text-white font-bold py-3 px-6 rounded-lg">Log In</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="signupModal" class="modal fixed inset-0 z-50 flex items-center justify-center invisible opacity-0 bg-black bg-opacity-70">
+        <div class="glass-effect w-full max-w-md p-8 rounded-2xl m-4 relative">
+            <button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close modal">&times;</button>
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Create Your Shield</h2>
+            <form id="signupForm">
+                <input name="fullName" type="text" placeholder="Full Name" required class="w-full bg-gray-800 text-white p-3 rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <input name="email" type="email" placeholder="Email Address" required class="w-full bg-gray-800 text-white p-3 rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <input name="password" type="password" placeholder="Password (min. 6 characters)" required class="w-full bg-gray-800 text-white p-3 rounded-lg mb-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <button type="submit" class="w-full cta-button text-white font-bold py-3 px-6 rounded-lg">Sign Up</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="verificationModal" class="modal fixed inset-0 z-50 flex items-center justify-center invisible opacity-0 bg-black bg-opacity-70">
+        <div class="glass-effect w-full max-w-lg p-8 rounded-2xl m-4 relative">
+             <button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close modal">&times;</button>
+            <h2 class="text-2xl font-bold text-white mb-4 text-center">Identity Verification</h2>
+            <p class="text-gray-400 text-center mb-6">Please provide your details exactly as they appear on your government documents.</p>
+            <form id="verificationForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input name="fullNameOnDoc" type="text" placeholder="Full Name" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    <input name="dob" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Date of Birth" required class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                </div>
+                <select name="docType" id="docTypeSelect" class="w-full bg-gray-800 text-white p-3 rounded-lg mt-4 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                    <option value="">Select Document Type</option>
+                    <option value="Aadhaar">Aadhaar Card</option>
+                    <option value="PAN">PAN Card</option>
+                    <option value="DL">Driving License</option>
+                    <option value="Passport">Passport</option>
+                </select>
+                <div id="docInputContainer" class="mt-4">
+                    </div>
+                 <button type="submit" class="w-full cta-button text-white font-bold py-3 px-6 rounded-lg mt-6">Submit for Verification</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="notificationModal" class="modal fixed top-10 left-1/2 -translate-x-1/2 z-[101] invisible opacity-0">
+        <div id="notificationContent" class="p-4 rounded-lg text-white font-semibold"></div>
+    </div>
+    
+    <script src="js/animations.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>

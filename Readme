@@ -1,0 +1,100 @@
+FraudShield 
+FraudShield is a robust backend service designed as a digital guardian against online fraud, scams, and phishing attempts. It provides a comprehensive set of tools for user authentication, threat analysis of text and links, and secure user data management. The application is built with Node.js, Express.js, and uses a SQLite database for data persistence.
+
+Key Features
+User Authentication: Secure user registration and login system using JWT (JSON Web Tokens) and password hashing with bcryptjs.
+
+Profile Management: Endpoints for users to view and update their profile information, including profile picture uploads handled by multer.
+
+Threat Analysis Engine: A sophisticated engine (analysisEngine.js) that calculates a "threat score" for text content and URLs.
+
+Multi-Vector Detection: Analyzes content against a comprehensive threat database of keywords, known spam messages, and malicious domains in multiple languages (English, Hinglish).
+
+Link Authenticity Analysis: Validates URLs against whitelists of official domains and blacklists of malicious domains, and checks for typosquatting.
+
+Screenshot Analysis: Utilizes tesseract.js for OCR (Optical Character Recognition) to extract and analyze text from uploaded screenshots.
+
+Email Alert System: Integrated with nodemailer to send high-risk security alerts to users' registered email addresses.
+
+Database Schema: A well-defined SQLite database schema (schema.sql) for storing user data, analysis history, verification details, and support tickets.
+
+Environment Configuration: Securely manages sensitive information like database credentials and secret keys using a .env file.
+
+Project Structure
+Here is an overview of the key files and directories in the project:
+
+/
+|-- public/                 # Directory for static frontend files (HTML, CSS, JS)
+|   |-- index.html
+|   |-- dashboard.html
+|   |-- profile.html
+|   |-- analyzer.html
+|   `-- ... (other assets)
+|-- server.js               # The main entry point for the Express server
+|-- analysisEngine.js       # Core logic for calculating threat scores
+|-- mailer.js               # Handles sending email notifications
+|-- threat-database.js      # Database of malicious keywords and spam messages
+|-- weblinks.js             # Database of official and malicious domains
+|-- schema.sql              # SQL script to initialize the database schema
+|-- package.json            # Lists project dependencies and scripts
+|-- package-lock.json       # Records the exact versions of dependencies
+`-- .env                    # Environment variables (needs to be created)
+
+Prerequisites
+Before you begin, ensure you have the following installed on your system:
+
+Node.js (v14.x or later recommended)
+
+npm (Node Package Manager)
+
+A command-line tool for SQLite, such as DB Browser for SQLite.
+
+Installation & Setup
+Follow these steps to get your project up and running locally.
+
+1. Download the Project
+Download all the project files from your Google Drive into a local directory on your machine.
+
+2. Install Dependencies
+Navigate to the project's root directory in your terminal and run the following command to install all the required npm packages:
+
+npm install
+
+3. Configure Environment Variables
+Create a file named .env in the root of your project directory. Copy the content from your existing .env file or use the template below and fill in the values.
+
+# --- Database Configuration ---
+# The name of the SQLite database file
+DB_FILE=fraudshield.db
+
+# --- Security & Authentication ---
+# A long, random, and secret string for signing JSON Web Tokens (JWT)
+# IMPORTANT: Change this to a new, long, random string for security
+JWT_SECRET=your-super-secret-key-that-is-long-and-secure
+
+# --- Emailer Configuration (for sending alerts) ---
+# Your Gmail account and an "App Password"
+# See Google's documentation on how to generate an App Password: [https://support.google.com/accounts/answer/185833](https://support.google.com/accounts/answer/185833)
+EMAIL_USER=your-email@gmail.com
+EMAIL_APP_PASSWORD=your-gmail-app-password
+
+4. Set Up the Database
+The schema.sql file contains the necessary commands to create all the tables. You need to run this script against your SQLite database file.
+
+Open your terminal in the project's root directory.
+
+Run the following command. This will execute the schema.sql script and create the fraudshield.db file (or whatever you named it in .env) with the correct tables.
+
+sqlite3 fraudshield.db < schema.sql
+
+Running the Application
+Once the installation and setup are complete, you can start the server with the following command:
+
+npm start
+
+The server will start, and you should see a confirmation message in your console:
+
+Database connected successfully!
+Server is running on port 3000
+
+Your backend application is now running on http://localhost:3000.
